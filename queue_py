@@ -1,0 +1,61 @@
+class Transaction:
+    def __init__(self, customer_name, account_no, transaction_type, amount):
+        self.customer_name = customer_name
+        self.account_no = account_no
+        self.transaction_type = transaction_type
+        self.amount = amount
+
+    def __str__(self):
+        return f"{self.customer_name} | {self.account_no} | {self.transaction_type} | ${self.amount}"
+
+
+class BankQueue:
+    def __init__(self):
+        self.transactions = []
+
+    def enqueue(self, transaction):
+        self.transactions.append(transaction)
+        print(f"Added transaction: {transaction}")
+
+    def dequeue(self):
+        if self.transactions:
+            transaction = self.transactions.pop(0)
+            print(f"Processed transaction: {transaction}")
+            return transaction
+        else:
+            print("No transactions to process.")
+            return None
+
+    def peek(self):
+        if self.transactions:
+            print(f"Next transaction: {self.transactions[0]}")
+            return self.transactions[0]
+        else:
+            print("No transactions in the queue.")
+            return None
+
+
+queue = BankQueue()
+
+# Test Case 1: Add transactions
+queue.enqueue(Transaction("Alice", "ACC101", "deposit", 500))
+queue.enqueue(Transaction("Bob", "ACC102", "withdrawal", 200))
+queue.enqueue(Transaction("Charlie", "ACC103", "deposit", 1000))
+
+# Test Case 2: Peek at next transaction
+queue.peek()
+
+# Test Case 3: Process transactions
+queue.dequeue()
+queue.dequeue()
+
+# Test Case 4: Add another transaction
+queue.enqueue(Transaction("Diana", "ACC104", "withdrawal", 300))
+
+# Test Case 5: Process remaining transactions
+while queue.transactions:
+    queue.dequeue()
+
+# Test Case 6: Edge case - empty queue
+queue.dequeue()
+queue.peek()
